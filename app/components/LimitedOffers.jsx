@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { useEcommerceStore } from "@/app/store/Auth";
+import { useEcommerceStore } from "@/app/store/ecommerceStore";
 import styles from "@/app/style/limitedOffers.module.css";
 
 export default function LimitedOffers() {

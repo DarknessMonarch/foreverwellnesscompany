@@ -3,7 +3,7 @@
 import { toast } from "sonner";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useEcommerceStore } from "@/app/store/Auth";
+import { useEcommerceStore } from "@/app/store/ecommerceStore";
 import Loader from "@/app/components/Loader";
 import styles from "@/app/style/auth.module.css";
 

@@ -12,14 +12,14 @@ export const useCartStore = create((set, get) => ({
 
   // These methods now delegate to the ecommerce store
   getItemCount: () => {
-    const { useEcommerceStore } = require('./Auth');
+    const { useEcommerceStore } = require('./ecommerceStore');
     const cart = useEcommerceStore.getState().cart;
     if (!cart || !cart.items) return 0;
     return cart.items.reduce((sum, item) => sum + item.quantity, 0);
   },
 
   getSubtotal: () => {
-    const { useEcommerceStore } = require('./Auth');
+    const { useEcommerceStore } = require('./ecommerceStore');
     const cart = useEcommerceStore.getState().cart;
     return cart?.totalAmount || 0;
   },

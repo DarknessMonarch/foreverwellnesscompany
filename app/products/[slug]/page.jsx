@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { useEcommerceStore } from "@/app/store/Auth";
+import { useEcommerceStore } from "@/app/store/ecommerceStore";
 import Nothing from "@/app/components/Nothing";
 import EmptyCart from "@/public/assets/emptycart.png";
 import LoadingLogo from "@/app/components/loadingLogo";

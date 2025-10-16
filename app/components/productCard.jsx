@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useEcommerceStore } from "@/app/store/Auth";
+import { useEcommerceStore } from "@/app/store/ecommerceStore";
 import { IoCartOutline as CartIcon } from "react-icons/io5";
 import styles from "@/app/style/productCard.module.css";
 

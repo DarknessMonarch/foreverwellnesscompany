@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useEcommerceStore } from "@/app/store/Auth";
+import { useEcommerceStore } from "@/app/store/ecommerceStore";
 
 export function StoreInitializer({ children }) {
   const { initializeAuth, isAuth } = useEcommerceStore();

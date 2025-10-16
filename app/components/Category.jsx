@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useEcommerceStore } from "@/app/store/Auth";
+import { useEcommerceStore } from "@/app/store/ecommerceStore";
 import styles from "@/app/style/category.module.css";
 import { MdOutlineKeyboardArrowLeft as LeftIcon } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight as RightIcon } from "react-icons/md";

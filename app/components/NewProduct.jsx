@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useEcommerceStore } from "@/app/store/Auth";
+import { useEcommerceStore } from "@/app/store/ecommerceStore";
 import EmptyCart from "@/public/assets/emptycart.png";
 import Nothing from "@/app/components/Nothing";
 import styles from "@/app/style/product.module.css";

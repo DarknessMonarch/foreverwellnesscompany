@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "@/app/components/Loader";
-import { useEcommerceStore } from "@/app/store/Auth";
+import { useEcommerceStore } from "@/app/store/ecommerceStore";
 import styles from "@/app/style/auth.module.css";
 
 import { MdOutlineEmail as EmailIcon } from "react-icons/md";

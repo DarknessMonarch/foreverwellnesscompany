@@ -5,7 +5,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import { useCartStore } from "@/app/store/Cart";
 import Logo from "@/public/assets/logo.png";
-import { useEcommerceStore } from "@/app/store/Auth";
+import { useEcommerceStore } from "@/app/store/ecommerceStore";
 import Dropdown from "@/app/components/Dropdown";
 import styles from "@/app/style/navbar.module.css";
 import { useDrawerStore } from "@/app/store/Drawer";

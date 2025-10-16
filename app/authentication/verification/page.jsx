@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "@/app/components/Loader";
-import { useEcommerceStore } from "@/app/store/Auth";
+import { useEcommerceStore } from "@/app/store/ecommerceStore";
 import styles from "@/app/style/auth.module.css";
 import { BsQrCode as VerificationIcon } from "react-icons/bs";
 
@@ -15,7 +15,7 @@ export default function Verification() {
   const router = useRouter();
   const { verifyEmail, resendVerificationCode, email } = useEcommerceStore();
 
-  // Check if user has email, if not redirect to register
+
   useEffect(() => {
     if (!email) {
       toast.error("Please register or login first");

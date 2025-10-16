@@ -7,7 +7,7 @@ import styles from "@/app/style/product.module.css";
 import ProductCard from "@/app/components/productCard";
 import Nothing from "@/app/components/Nothing";
 import EmptyCart from "@/public/assets/emptycart.png";
-import { useEcommerceStore } from "@/store/useEcommerceStore";
+import { useEcommerceStore } from "@/store/ecommerceStore";
 
 // Separate component that uses useSearchParams
 function CategoryContent() {

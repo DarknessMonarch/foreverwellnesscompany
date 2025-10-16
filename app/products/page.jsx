@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useEcommerceStore } from "@/app/store/Auth";
+import { useEcommerceStore } from "@/app/store/ecommerceStore";
 import LoadingLogo from "@/app/components/loadingLogo";
 import styles from "@/app/style/product.module.css";
 import ProductCard from "@/app/components/productCard";

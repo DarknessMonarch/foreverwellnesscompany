@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useEcommerceStore } from "@/app/store/Auth";
+import { useEcommerceStore } from "@/app/store/ecommerceStore";
 import Advert from "@/app/components/Advert";
 import Product from "@/app/components/Product";
 import Category from "@/app/components/Category";

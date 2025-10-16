@@ -3,7 +3,7 @@
 import { toast } from "sonner";
 import Image from "next/image";
 import { useState } from "react";
-import { useEcommerceStore } from "@/app/store/Auth";
+import { useEcommerceStore } from "@/app/store/ecommerceStore";
 import styles from "@/app/style/cartCard.module.css";
 
 import { IoAdd as AddIcon, IoRemove as RemoveIcon } from "react-icons/io5";

@@ -3,7 +3,7 @@
 import { toast } from "sonner";
 import { useState, useEffect, Suspense } from "react";
 import Loader from "@/app/components/Loader";
-import { useEcommerceStore } from "@/app/store/Auth";
+import { useEcommerceStore } from "@/app/store/ecommerceStore";
 import styles from "@/app/style/auth.module.css";
 import { useRouter, useSearchParams } from "next/navigation";
 

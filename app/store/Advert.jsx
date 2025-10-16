@@ -146,4 +146,4 @@ export const useAdvertStore = create(
   )
 );
 
-import { useEcommerceStore } from "./Auth";
+import { useEcommerceStore } from "./ecommerceStore";

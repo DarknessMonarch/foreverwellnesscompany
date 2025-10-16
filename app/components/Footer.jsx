@@ -12,7 +12,6 @@ import { MdEmail as EmailIcon } from "react-icons/md";
 import { IoCall as PhoneIcon } from "react-icons/io5";
 import { FaApple as AppleIcon } from "react-icons/fa";
 import { FaTiktok as TiktokIcon } from "react-icons/fa6";
-import { FaFacebookF as FacebookIcon } from "react-icons/fa";
 import { BsInstagram as InstagramIcon } from "react-icons/bs";
 import { IoLogoGooglePlaystore as PlaystoreIcon } from "react-icons/io5";
 
