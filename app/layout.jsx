@@ -163,7 +163,7 @@ const organizationSchema = {
     email: "contact@foreverwellnesscompany.com",
     contactType: "Customer Support",
     url: SITE_URL,
-    telephone: "254703147237",
+    telephone: "+254796620365",
     areaServed: "Worldwide",
     availableLanguage: "English",
   },

@@ -8,7 +8,6 @@ import styles from "@/app/style/footer.module.css";
 import MasterCard from "@/public/assets/masterCard.png";
 import AirtelMoney from "@/public/assets/airtelMoney.png";
 
-
 import { MdEmail as EmailIcon } from "react-icons/md";
 import { IoCall as PhoneIcon } from "react-icons/io5";
 import { FaApple as AppleIcon } from "react-icons/fa";
@@ -19,19 +18,14 @@ import { IoLogoGooglePlaystore as PlaystoreIcon } from "react-icons/io5";
 
 export default function Footer() {
   const handleInstagramClick = () => {
-    window.open("https://www.instagram.com/kamukunjikonnect", "_blank");
+    window.open("https://www.instagram.com/foreverwellnesscompany", "_blank");
   };
 
   const handleTiktokClick = () => {
-    window.open(
-      "https://www.tiktok.com/@kamukunji.konnect?_t=ZM-8xGyl2f3r53&_r=1",
-      "_blank"
-    );
+    window.open("https://www.tiktok.com/@foreverwellnesscompany", "_blank");
   };
 
-  const handleFacebookClick = () => {
-    window.open("https://www.facebook.com/share/16kZdqxdcz/", "_blank");
-  };
+
 
   return (
     <footer className={styles.footer}>
@@ -53,39 +47,38 @@ export default function Footer() {
       <div className={styles.footerContent}>
         <div className={styles.footerGrid}>
           <div className={styles.footerSection}>
-            <h4>Kamukunji Konnect</h4>
+            <h4>ForeverWellnessCompany</h4>
             <div className={styles.contactInfo}>
               <div className={styles.phone}>
                 <PhoneIcon aria-label="Phone Icon" className={styles.phoneIcon} />
-                <p>(+254) 743-161-569</p>
+                <p>(+254) 796-620-365</p>
               </div>
               <div className={styles.email}>
                 <EmailIcon aria-label="Email Icon" className={styles.emailIcon} />
-                <p>kamukunjikonnect@gmail.com</p>
+                <p>foreverwellnesscompany@gmail.com</p>
               </div>
             </div>
             <div className={styles.socialIcons}>
-              <button
-                onClick={handleFacebookClick}
-                className={styles.socialIcon}
-              >
-                <FacebookIcon aria-label="Facebook Icon" />
-              </button>
-           
+
               <button
                 onClick={handleInstagramClick}
                 className={styles.socialIcon}
+                aria-label="Instagram"
               >
                 <InstagramIcon aria-label="Instagram Icon" />
               </button>
-              <button onClick={handleTiktokClick} className={styles.socialIcon}>
+              <button
+                onClick={handleTiktokClick}
+                className={styles.socialIcon}
+                aria-label="TikTok"
+              >
                 <TiktokIcon aria-label="Tiktok Icon" />
               </button>
             </div>
           </div>
 
           <div className={styles.footerSection}>
-            <h4>Quick Link</h4>
+            <h4>Quick Links</h4>
             <div className={styles.footerLinksContainer}>
               <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link>
               <Link href="/refund" className={styles.footerLink}>Refund Policy</Link>
@@ -118,7 +111,7 @@ export default function Footer() {
 
       <div className={styles.footerBottom}>
         <div className={styles.footerBottomContent}>
-          <p>&copy; 2025. All rights reserved. KamukunjiKonnect.</p>
+          <p>&copy; 2025. All rights reserved. ForeverWellnessCompany.</p>
           <div className={styles.paymentMethods}>
             <div className={styles.paymentIcons}>
               <Image

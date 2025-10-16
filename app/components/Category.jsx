@@ -2,60 +2,12 @@
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useEcommerceStore } from "@/app/store/Auth";
 import styles from "@/app/style/category.module.css";
 import { MdOutlineKeyboardArrowLeft as LeftIcon } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight as RightIcon } from "react-icons/md";
 
-const CATEGORIES = [
-  {
-    id: 'electronics',
-    name: "Electronics",
-    href: "/products?category=electronics",
-    image: "https://cdn.pixabay.com/photo/2018/02/22/15/41/wood-3173282_640.jpg",
-  },
-  {
-    id: 'clothing',
-    name: "Clothing",
-    href: "/products?category=clothing",
-    image: "https://cdn.pixabay.com/photo/2017/07/04/07/31/pan-2470217_640.jpg",
-  },
-  {
-    id: 'home',
-    name: "Home",
-    href: "/products?category=home",
-    image: "https://cdn.pixabay.com/photo/2020/02/07/07/18/kitchen-4826379_640.jpg",
-  },
-  {
-    id: 'beauty',
-    name: "Beauty",
-    href: "/products?category=beauty",
-    image: "https://cdn.pixabay.com/photo/2020/02/07/07/18/kitchen-4826379_640.jpg",
-  },
-  {
-    id: 'sports',
-    name: "Sports",
-    href: "/products?category=sports",
-    image: "https://cdn.pixabay.com/photo/2020/02/07/07/18/kitchen-4826379_640.jpg",
-  },
-  {
-    id: 'books',
-    name: "Books",
-    href: "/products?category=books",
-    image: "https://cdn.pixabay.com/photo/2020/02/07/07/18/kitchen-4826379_640.jpg",
-  },
-  {
-    id: 'toys',
-    name: "Toys",
-    href: "/products?category=toys",
-    image: "https://cdn.pixabay.com/photo/2020/02/07/07/18/kitchen-4826379_640.jpg",
-  },
-  {
-    id: 'other',
-    name: "Other",
-    href: "/products?category=other",
-    image: "https://cdn.pixabay.com/photo/2020/02/07/07/18/kitchen-4826379_640.jpg",
-  },
-];
+const DEFAULT_CATEGORY_IMAGE = "https://cdn.pixabay.com/photo/2020/02/07/07/18/kitchen-4826379_640.jpg";
 
 const CategorySkeleton = () => (
   <div className={styles.categoryImageContainer}>
@@ -65,6 +17,8 @@ const CategorySkeleton = () => (
 
 export default function Category() {
   const router = useRouter();
+  const { products, getAllProducts } = useEcommerceStore();
+  const [categories, setCategories] = useState([]);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [hasOverflow, setHasOverflow] = useState(false);
   const [maxScroll, setMaxScroll] = useState(0);
@@ -72,13 +26,42 @@ export default function Category() {
   const gridRef = useRef(null);
 
   useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
+    const fetchCategories = async () => {
+      setIsLoading(true);
+      try {
+        const result = await getAllProducts({ limit: 100 });
+        if (result.success && result.data.products) {
+          const fetchedProducts = result.data.products;
+          
+          // Extract unique categories from products
+          const uniqueCategories = [...new Set(
+            fetchedProducts
+              .map(product => product.category)
+              .filter(Boolean)
+          )];
+          
+          // Format categories with images (use first product image for each category)
+          const formattedCategories = uniqueCategories.map(cat => {
+            const productInCategory = fetchedProducts.find(p => p.category === cat);
+            return {
+              id: cat,
+              name: cat.charAt(0).toUpperCase() + cat.slice(1),
+              href: `/products?category=${cat}`,
+              image: productInCategory?.images?.[0] || DEFAULT_CATEGORY_IMAGE,
+            };
+          });
+          
+          setCategories(formattedCategories);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    return () => clearTimeout(timer);
-  }, []);
+    fetchCategories();
+  }, [getAllProducts]);
 
   useEffect(() => {
     const checkOverflow = () => {
@@ -96,7 +79,7 @@ export default function Category() {
     checkOverflow();
     window.addEventListener("resize", checkOverflow);
     return () => window.removeEventListener("resize", checkOverflow);
-  }, [isLoading]);
+  }, [isLoading, categories]);
 
   const handlePrevious = () => {
     if (!hasOverflow || isLoading) return;
@@ -176,7 +159,7 @@ export default function Category() {
           ? Array.from({ length: 6 }).map((_, index) => (
               <CategorySkeleton key={index} />
             ))
-          : CATEGORIES.map((category) => (
+          : categories.map((category) => (
               <div 
                 key={category.id} 
                 className={styles.categoryImageContainer}

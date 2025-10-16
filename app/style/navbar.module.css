@@ -20,7 +20,7 @@
   position: relative;
   transition: transform 0.3s ease-out;
 }
-
+ 
 /* Slide animations - similar to cart drawer */
 .slideIn {
   transform: translateX(0);
@@ -50,7 +50,6 @@
   }
 }
 
-/* Base Navbar Styles */
 @media screen {
   .navbarWrapper {
     border-bottom: 1px solid var(--border-color);
@@ -67,15 +66,13 @@
     height: 50px;
     display: flex;
     padding: 10px 0;
+    text-align: center;
+    font-size: 0.8rem;
     align-items: center;
     justify-content: center;
     text-transform: capitalize;
     color: var(--background-color);
-    background-color: var(--secondary-color);
-  }
-
-  .navbarOffer span {
-    font-size: 0.9rem;
+    background-color: var(--primary-color);
   }
 
   .navbarContainerWrapper {
@@ -101,13 +98,17 @@
     background-color: var(--background-color);
   }
 
-  .menuIcon,
-  .closeIcon {
-    font-size: 28px;
+  .menuIcon {
+    font-size: 34px;
   }
 
+    .closeIcon {
+    font-size: 34px;
+  }
+
+
   .mobileMenuButton:hover {
-    color: var(--secondary-color);
+    color: var(--primary-color);
   }
 
   .secondaryNav {
@@ -141,13 +142,13 @@
   }
 
   .cartIcon {
-    font-size: 24px;
+    font-size: 34px;
     position: relative;
   }
 
   .cartCount {
-    right: 15px;
-    top: -14px; 
+    right: 18px;
+    top: -10px; 
     width: 20px;
     height: 20px;
     display: flex;
@@ -157,7 +158,7 @@
     align-items: center;
     justify-content: center;
     color: var(--background-color);
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
   }
 
   .logoSection {
@@ -183,8 +184,6 @@
   .navigationLinks {
     gap: 10px;
     display: flex;
-    margin: 10px;
-    padding: 10px;
     border-radius: 10px;
     align-items: center;
     flex-direction: column;
@@ -217,13 +216,13 @@
   }
 
   .activeNavLink {
-    color: var(--secondary-color);
+    color: var(--primary-color);
   }
 
   .navLink {
     font-size: 0.9rem;
     text-transform: capitalize;
-    color: var(--primary-color);
+    color: var(--dark-color);
     display: flex;
     cursor: pointer;
     padding: 20px 10px;
@@ -237,11 +236,11 @@
   }
 
   .navLink:hover {
-    color: var(--secondary-color);
+    color: var(--primary-color);
   }
 
   .activeNavLink {
-    color: var(--secondary-color);
+    color: var(--primary-color);
     font-weight: 600;
   }
 
@@ -317,12 +316,12 @@
   }
 
   .selectedOption {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: var(--background-color);
   }
 
   .selectedOption:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
   }
 
   .searchInputContainer {
@@ -394,11 +393,11 @@
     border-radius: 50%;
     align-items: center;
     justify-content: center;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
   }
 
   .accountSection:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
   }
 
   .accountIcon {
@@ -444,7 +443,7 @@
     height: auto;
     background-color: var(--background-secondary);
     animation: mobileDropdownSlide 0.3s ease-out;
-    border-left: 4px solid var(--secondary-color);
+    border-left: 4px solid var(--primary-color);
   }
 
   .dropdownContent {
@@ -463,7 +462,7 @@
   }
 
   .dropdownInfo h2 {
-    color: var(--secondary-color);
+    color: var(--primary-color);
     font-size: 1.4rem;
     text-decoration: underline;
   }
@@ -508,8 +507,8 @@
   }
 
   .dropdownItem:hover {
-    color: var(--secondary-color);
-    border-color: var(--secondary-color);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
   }
 
   .dropdownImageContainer {
@@ -529,7 +528,7 @@
   .dropdownImageContainer h3 {
     font-size: 1.4rem;
     text-decoration: underline;
-    color: var(--secondary-color);
+    color: var(--primary-color);
   }
 
   .dropdownImageContainer p {
@@ -599,11 +598,11 @@
     cursor: pointer;
     border-radius: 10px;
     color: var(--background-color);
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
   }
 
   .logoutButton:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
   }
 
   .logoutIcon {
@@ -646,7 +645,7 @@
     height: auto;
     background-color: var(--background-secondary);
     animation: none;
-    border-left: 4px solid var(--secondary-color);
+    border-left: 4px solid var(--primary-color);
     border-bottom: none;
   }
 
@@ -666,7 +665,7 @@
   }
 
   .dropdownInfo h2 {
-    color: var(--secondary-color);
+    color: var(--primary-color);
     font-size: 1.2rem;
     text-decoration: underline;
     margin-bottom: 10px;
@@ -697,9 +696,9 @@
   }
 
   .dropdownItem:hover {
-    color: var(--secondary-color);
+    color: var(--primary-color);
     background-color: var(--light-gray);
-    border-color: var(--secondary-color);
+    border-color: var(--primary-color);
   }
 
   .dropdownImageContainer {
@@ -719,7 +718,7 @@
   .dropdownImageContainer h3 {
     font-size: 1.2rem;
     text-decoration: underline;
-    color: var(--secondary-color);
+    color: var(--primary-color);
   }
 
   .dropdownImageContainer p {
@@ -728,22 +727,25 @@
     line-height: 1.4;
   }
 
-  /* Mobile menu header */
   .mobileMenuHeader {
-    padding: 20px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     border-bottom: 2px solid var(--border-color);
     background-color: var(--background-color);
-    position: sticky;
-    top: 0;
-    z-index: 10;
   }
 
-  .mobileMenuTitle {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--primary-color);
-    text-align: center;
+  .mobileMenuClose {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    font-size: .8rem;
+    color: var(--background-color);
+    background-color: var(--primary-color);
   }
+
+
 }
 
 /* Tablet & Small Laptop Screens - 768px+ (48em+) */
@@ -809,12 +811,12 @@
   }
 
   .navLink:hover {
-    color: var(--secondary-color);
+    color: var(--primary-color);
   }
 
   .dropdown {
     position: fixed;
-    top: 170px;
+    top: 190px;
     left: 0;
     width: 100vw;
     background-color: var(--background-color);

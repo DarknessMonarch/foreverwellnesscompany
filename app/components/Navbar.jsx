@@ -10,7 +10,14 @@ import Dropdown from "@/app/components/Dropdown";
 import styles from "@/app/style/navbar.module.css";
 import { useDrawerStore } from "@/app/store/Drawer";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState, useCallback, useRef, useMemo, Suspense } from "react";
+import {
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+  useMemo,
+  Suspense,
+} from "react";
 
 import {
   IoClose as CloseIcon,
@@ -39,22 +46,6 @@ const ALLOWED_IMAGE_TYPES = [
   "image/png",
   "image/webp",
   "image/gif",
-];
-
-const BACKEND_CATEGORIES = [
-  { id: 'electronics', name: "Electronics", value: 'electronics' },
-  { id: 'clothing', name: "Clothing", value: 'clothing' },
-  { id: 'home', name: "Home", value: 'home' },
-  { id: 'beauty', name: "Beauty", value: 'beauty' },
-  { id: 'sports', name: "Sports", value: 'sports' },
-  { id: 'books', name: "Books", value: 'books' },
-  { id: 'toys', name: "Toys", value: 'toys' },
-  { id: 'other', name: "Other", value: 'other' },
-];
-
-const CATEGORY_OPTIONS = [
-  { id: "all", name: "All Categories", value: "all" },
-  ...BACKEND_CATEGORIES,
 ];
 
 const useResponsive = () => {
@@ -175,67 +166,96 @@ const useImageUpload = (updateProfileImage) => {
 const useNavLinks = () => {
   const { products, getAllProducts } = useEcommerceStore();
   const [navProducts, setNavProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
 
   useEffect(() => {
-    const fetchFeaturedProducts = async () => {
+    const fetchData = async () => {
       setIsLoadingProducts(true);
       try {
-        const result = await getAllProducts({ limit: 4, sort: 'newest' });
+        const result = await getAllProducts({ limit: 100 });
         if (result.success && result.data.products) {
-          setNavProducts(result.data.products);
+          const fetchedProducts = result.data.products;
+
+          setNavProducts(fetchedProducts.slice(0, 4));
+          const uniqueCategories = [
+            ...new Set(
+              fetchedProducts.map((product) => product.category).filter(Boolean)
+            ),
+          ];
+
+          const formattedCategories = uniqueCategories.map((cat) => ({
+            id: cat,
+            name: cat.charAt(0).toUpperCase() + cat.slice(1),
+            value: cat,
+          }));
+
+          setCategories(formattedCategories);
         }
       } catch (error) {
-        console.error("Error fetching nav products:", error);
+        console.error("Error fetching nav data:", error);
       } finally {
         setIsLoadingProducts(false);
       }
     };
 
-    fetchFeaturedProducts();
+    fetchData();
   }, [getAllProducts]);
 
-  const NAV_LINKS = useMemo(() => [
-    { href: "/", label: "Home", exact: true },
-    { href: "/about", label: "About Us", matchPattern: "/about" },
-    {
-      href: "/categories",
-      label: "Categories",
-      hasDropdown: true,
-      dropdown: BACKEND_CATEGORIES.map((cat) => ({
-        name: cat.name,
-        href: `/products?category=${cat.value}`,
-      })),
-      title: "Shop by Category",
-      description: "Explore our comprehensive range of products organized by category. Find exactly what you need.",
-      image: "https://cdn.pixabay.com/photo/2018/02/22/15/41/wood-3173282_640.jpg",
-      imageTitle: "Complete Product Range",
-      imageDescription: "From electronics to home goods, discover everything you need in one place.",
-    },
-    {
-      href: "/products",
-      label: "Products",
-      hasDropdown: true,
-      dropdown: navProducts.map((product) => ({
-        name: product.name,
-        href: `/products/${product._id}`,
-      })),
-      title: "Featured Products",
-      description: "Discover our most popular and highest-rated products. Quality items customers love.",
-      image: "https://cdn.pixabay.com/photo/2017/07/04/07/31/pan-2470217_640.jpg",
-      imageTitle: "Best-Selling Items",
-      imageDescription: "Shop our top-rated products trusted by thousands of satisfied customers.",
-    },
-    { href: "/blog", label: "Blog" },
-    { href: "/contact", label: "Contact Us" },
-  ], [navProducts]);
+  const CATEGORY_OPTIONS = useMemo(
+    () => [{ id: "all", name: "All Categories", value: "all" }, ...categories],
+    [categories]
+  );
 
-  return { NAV_LINKS, isLoadingProducts };
+  const NAV_LINKS = useMemo(
+    () => [
+      { href: "/", label: "Home", exact: true },
+      { href: "/about", label: "About Us", matchPattern: "/about" },
+      {
+        href: "/categories",
+        label: "Categories",
+        hasDropdown: true,
+        dropdown: categories.map((cat) => ({
+          name: cat.name,
+          href: `/products?category=${cat.value}`,
+        })),
+        title: "Shop by Category",
+        description:
+          "Explore our comprehensive range of products organized by category. Find exactly what you need.",
+        image:
+          "https://cdn.pixabay.com/photo/2018/02/22/15/41/wood-3173282_640.jpg",
+        imageTitle: "Complete Product Range",
+        imageDescription:
+          "From electronics to home goods, discover everything you need in one place.",
+      },
+      {
+        href: "/products",
+        label: "Products",
+        hasDropdown: true,
+        dropdown: navProducts.map((product) => ({
+          name: product.name,
+          href: `/products/${product._id}`,
+        })),
+        title: "Featured Products",
+        description:
+          "Discover our most popular and highest-rated products. Quality items customers love.",
+        image:
+          "https://cdn.pixabay.com/photo/2017/07/04/07/31/pan-2470217_640.jpg",
+        imageTitle: "Best-Selling Items",
+        imageDescription:
+          "Shop our top-rated products trusted by thousands of satisfied customers.",
+      },
+      { href: "/contact", label: "Contact Us" },
+    ],
+    [navProducts, categories]
+  );
+
+  return { NAV_LINKS, CATEGORY_OPTIONS, isLoadingProducts };
 };
 
 const isLinkActive = (pathname, searchParams, link) => {
   if (!pathname) return false;
-  
+
   if (link.exact) {
     return pathname === link.href;
   }
@@ -245,9 +265,7 @@ const isLinkActive = (pathname, searchParams, link) => {
 
     if (pathname.startsWith("/products")) {
       const categoryParam = searchParams?.get?.("category");
-      if (categoryParam) {
-        return BACKEND_CATEGORIES.some((cat) => cat.value === categoryParam);
-      }
+      return !!categoryParam;
     }
 
     return false;
@@ -333,20 +351,21 @@ const NavItemDropdown = ({
   );
 };
 
-const ProfileImageComponent = ({ 
-  profileImage, 
-  onImageClick, 
+const ProfileImageComponent = ({
+  profileImage,
+  onImageClick,
   isUploading,
   showHint,
   onMouseEnter,
   onMouseLeave,
 }) => (
-  <div 
+  <div
     className={styles.profileImgWrapper}
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
   >
-    {profileImage?.startsWith("https://") || profileImage?.startsWith("http://") ? (
+    {profileImage?.startsWith("https://") ||
+    profileImage?.startsWith("http://") ? (
       <div className={styles.profileImgContainer}>
         <Image
           className={styles.profileImg}
@@ -501,14 +520,14 @@ const NavigationLinks = ({
   );
 };
 
-const MobileMenuOverlay = ({ 
-  isOpen, 
-  onClose, 
-  pathname, 
-  searchParams, 
-  activeDropdown, 
+const MobileMenuOverlay = ({
+  isOpen,
+  onClose,
+  pathname,
+  searchParams,
+  activeDropdown,
   setActiveDropdown,
-  navLinks 
+  navLinks,
 }) => {
   const [isClosing, setIsClosing] = useState(false);
 
@@ -529,24 +548,44 @@ const MobileMenuOverlay = ({
   if (!isOpen && !isClosing) return null;
 
   return (
-    <div 
-      className={styles.mobileMenuOverlay}
-      onClick={handleOverlayClick}
-    >
-      <div className={`${styles.mobileMenuContent} ${
-        isClosing ? styles.slideOut : styles.slideIn
-      }`}>
-        <div className={styles.mobileMenuHeader}>
-          <h2 className={styles.mobileMenuTitle}>Navigation Menu</h2>
+    <div className={styles.mobileMenuOverlay} onClick={handleOverlayClick}>
+      <div
+        className={`${styles.mobileMenuContent} ${
+          isClosing ? styles.slideOut : styles.slideIn
+        }`}
+      >
+    <div className={styles.mobileMenuHeader}>
+          <div className={styles.logoContainer}>
+            <Image
+              src={Logo}
+              alt="logo"
+              height={100}
+              onClick={() => {
+                handleClose();
+                onLogoClick();
+              }}
+              priority={true}
+              className={styles.logoImage}
+              tabIndex={0}
+              role="button"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  onLogoClick();
+                }
+              }}
+              style={{ cursor: "pointer" }}
+            />
+          </div>
           <button
             className={styles.mobileMenuClose}
             onClick={handleClose}
-            aria-label="Close navigation menu"
+            aria-label="Close menu"
           >
             <CloseIcon className={styles.closeIcon} />
           </button>
         </div>
-        
+
         <NavigationLinks
           pathname={pathname}
           searchParams={searchParams || new URLSearchParams()}
@@ -566,8 +605,8 @@ const LogoSection = ({ onLogoClick }) => (
     <Image
       src={Logo}
       alt="Company Logo"
-      height={32}
-      width={32}
+      height={70}
+      width={70}
       onClick={onLogoClick}
       priority={true}
       className={styles.logoImage}
@@ -581,20 +620,18 @@ const LogoSection = ({ onLogoClick }) => (
       }}
       style={{ cursor: "pointer" }}
     />
-    <span
-      className={styles.logoText}
-      onClick={onLogoClick}
-      style={{ cursor: "pointer" }}
-    >
-      KamukunjiKonnect
-    </span>
+
   </div>
 );
 
-const SearchSection = ({ isMobile }) => {
+const SearchSection = ({ isMobile, categoryOptions }) => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(CATEGORY_OPTIONS[0]);
+  const [selectedCategory, setSelectedCategory] = useState(categoryOptions[0]);
+
+  useEffect(() => {
+    setSelectedCategory(categoryOptions[0]);
+  }, [categoryOptions]);
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -602,13 +639,13 @@ const SearchSection = ({ isMobile }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    
+
     if (!searchQuery.trim()) return;
 
     const params = new URLSearchParams();
-    if (searchQuery) params.set('search', searchQuery);
-    if (selectedCategory.value !== 'all') {
-      params.set('category', selectedCategory.value);
+    if (searchQuery) params.set("search", searchQuery);
+    if (selectedCategory.value !== "all") {
+      params.set("category", selectedCategory.value);
     }
 
     router.push(`/products?${params.toString()}`);
@@ -620,7 +657,7 @@ const SearchSection = ({ isMobile }) => {
     <form onSubmit={handleSearch} className={styles.searchContainer}>
       <div className={styles.categorySelector}>
         <Dropdown
-          options={CATEGORY_OPTIONS}
+          options={categoryOptions}
           onSelect={handleCategorySelect}
           dropPlaceHolder="Select Category"
           value={selectedCategory}
@@ -703,8 +740,9 @@ const RightSection = ({
 const CartSection = ({ onCartClick }) => {
   const { cart } = useEcommerceStore();
   const { toggleDrawer } = useCartStore();
-  
-  const itemCount = cart?.items?.reduce((sum, item) => sum + item.quantity, 0) || 0;
+
+  const itemCount =
+    cart?.items?.reduce((sum, item) => sum + item.quantity, 0) || 0;
   const subtotal = cart?.totalAmount || 0;
 
   const handleCartClick = () => {
@@ -733,24 +771,29 @@ const CartSection = ({ onCartClick }) => {
         <span className={styles.cartCount}>{itemCount}</span>
       </div>
       <span className={styles.cartPrice}>
-        {subtotal > 0 ? `Ksh ${subtotal.toFixed(2)}` : 'Ksh 0.00'}
+        {subtotal > 0 ? `Ksh ${subtotal.toFixed(2)}` : "Ksh 0.00"}
       </span>
     </div>
   );
 };
 
 const NavbarSkeleton = () => (
-  <nav className={styles.navbarWrapper} role="navigation" aria-label="Main navigation">
+  <nav
+    className={styles.navbarWrapper}
+    role="navigation"
+    aria-label="Main navigation"
+  >
     <div className={styles.navbarOffer}>
       <OfferIcon className={styles.offerIcon} aria-hidden="true" />
-      <span className={styles.offerText}>
-        Your best deals are here
-      </span>
+      <span className={styles.offerText}>Your best deals are here</span>
     </div>
     <div className={styles.navbarContainerWrapper}>
       <div className={styles.navbarContainer}>
         <div className={styles.logoContainer}>
-          <div className="skeleton" style={{ width: 32, height: 32, borderRadius: '4px' }} />
+          <div
+            className="skeleton"
+            style={{ width: 32, height: 32, borderRadius: "4px" }}
+          />
           <span className={styles.logoText}>KamukunjiKonnect</span>
         </div>
         <div className={styles.rightSection}>
@@ -761,7 +804,10 @@ const NavbarSkeleton = () => (
               <span>(+254) 743-161-569</span>
             </div>
           </div>
-          <div className="skeleton" style={{ width: 40, height: 40, borderRadius: '50%' }} />
+          <div
+            className="skeleton"
+            style={{ width: 40, height: 40, borderRadius: "50%" }}
+          />
         </div>
       </div>
     </div>
@@ -785,7 +831,7 @@ const NavbarContent = () => {
   } = useDrawerStore();
 
   const { isMobile } = useResponsive();
-  const { NAV_LINKS } = useNavLinks();
+  const { NAV_LINKS, CATEGORY_OPTIONS } = useNavLinks();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -814,7 +860,6 @@ const NavbarContent = () => {
 
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  // Load cart when user is authenticated
   useEffect(() => {
     if (isAuth) {
       getCart();
@@ -873,24 +918,24 @@ const NavbarContent = () => {
 
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.key === 'Escape' && isMobileMenuOpen) {
+      if (e.key === "Escape" && isMobileMenuOpen) {
         closeMobileMenu();
       }
     };
 
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
   }, [isMobileMenuOpen, closeMobileMenu]);
 
   useEffect(() => {
     if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
 
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isMobileMenuOpen]);
 
@@ -918,14 +963,15 @@ const NavbarContent = () => {
       >
         <div className={styles.navbarOffer}>
           <OfferIcon className={styles.offerIcon} aria-hidden="true" />
-          <span className={styles.offerText}>
-            Your best deals are here
-          </span>
+          <span className={styles.offerText}>Your best deals are here</span>
         </div>
         <div className={styles.navbarContainerWrapper}>
           <div className={styles.navbarContainer}>
             <LogoSection onLogoClick={handleLogoClick} />
-            <SearchSection isMobile={isMobile} />
+            <SearchSection
+              isMobile={isMobile}
+              categoryOptions={CATEGORY_OPTIONS}
+            />
             <RightSection
               isAuth={isAuth}
               username={username}

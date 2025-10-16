@@ -109,13 +109,13 @@ export default function ContactUs() {
       </div>
 
       <div className={styles.section}>
-        <h2>Get in Touch with KamukunjiConnect</h2>
+        <h2>Get in Touch with ForeverWellnessCompany</h2>
         <p>
-          We're here to help you find the perfect kitchen appliances and
-          cookware for your culinary needs. Whether you have questions about our
-          products, need assistance with an order, or want to provide feedback,
-          our customer service team is ready to assist you. Reach out to us
-          through any of the methods below.
+          We're here to help you find the perfect wellness and health products
+          for your lifestyle. Whether you have questions about our products,
+          need assistance with an order, or want to provide feedback, our
+          customer service team is ready to assist you. Reach out to us through
+          any of the methods below.
         </p>
       </div>
 
@@ -125,10 +125,10 @@ export default function ContactUs() {
           <div className={styles.contactItem}>
             <h3>Customer Service</h3>
             <p>
-              <strong>Phone:</strong> (+254) 743 161 569
+              <strong>Phone:</strong> (+254) 796-620-365
             </p>
             <p>
-              <strong>Email:</strong> kamukunjikonnect@gmail.com
+              <strong>Email:</strong> foreverwellnesscompany@gmail.com
             </p>
             <p>
               <strong>Hours:</strong> Monday - Friday, 8:00 AM - 6:00 PM EAT
@@ -138,10 +138,10 @@ export default function ContactUs() {
           <div className={styles.contactItem}>
             <h3>Sales Inquiries</h3>
             <p>
-              <strong>Phone:</strong>(+254) 743 161 569
+              <strong>Phone:</strong> (+254) 796-620-365
             </p>
             <p>
-              <strong>Email:</strong> kamukunjikonnect@gmail.com
+              <strong>Email:</strong> foreverwellnesscompany@gmail.com
             </p>
             <p>
               <strong>Hours:</strong> Monday - Saturday, 9:00 AM - 7:00 PM EAT
@@ -150,7 +150,7 @@ export default function ContactUs() {
 
           <div className={styles.contactItem}>
             <h3>Business Address</h3>
-            <p>Kamukunjikonnect Ltd.</p>
+            <p>ForeverWellnessCompany Ltd.</p>
             <p>Nairobi, Kenya</p>
             <p>
               <strong>Postal Code:</strong> 00100
@@ -253,8 +253,8 @@ export default function ContactUs() {
             in original packaging
           </li>
           <li>
-            <strong>Warranty:</strong> All appliances come with manufacturer
-            warranty coverage
+            <strong>Warranty:</strong> All wellness products come with
+            manufacturer warranty coverage where applicable
           </li>
           <li>
             <strong>Payment:</strong> We accept M-Pesa, bank transfers, and
