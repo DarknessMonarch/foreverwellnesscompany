@@ -24,7 +24,7 @@ const playfair = Playfair_Display({
 
 const SITE_URL = "https://foreverwellnesscompany.com";
 const BANNER_URL =
-  "https://raw.githubusercontent.com/foreverwellnesscompany/assets/refs/heads/master/public/assets/banner.png";
+  "https://raw.githubusercontent.com/DarknessMonarch/foreverwellnesscompany/refs/heads/master/public/assets/banner.png";
 
 export const viewport = {
   themeColor: "#00a86b",
@@ -152,10 +152,7 @@ const organizationSchema = {
   sameAs: [
     "https://www.facebook.com/foreverwellnesscompany",
     "https://whatsapp.com/channel/foreverwellnesscompany",
-    "https://twitter.com/foreverwellnesscompany",
     "https://instagram.com/foreverwellnesscompany",
-    "https://www.youtube.com/@foreverwellnesscompany",
-    "https://t.me/foreverwellnesscompany",
     "https://www.tiktok.com/@foreverwellnesscompany",
   ],
   contactPoint: {
